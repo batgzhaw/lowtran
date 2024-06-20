@@ -1978,7 +1978,7 @@ C
       ENDIF
       DO 12 KM = 1,15
          ! if python it was set from main common.
-12      if (.not.python. OR .WMOLunits.LT.7) JUNIT(KM) = JOU(JCHAR(KM))
+12      if (.not.python) JUNIT(KM) = JOU(JCHAR(KM))
 
 
       IF(IRD0 .EQ. 0) THEN
