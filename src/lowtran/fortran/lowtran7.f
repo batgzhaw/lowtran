@@ -1,14 +1,14 @@
       SUBROUTINE LWTRN7(Python,nwl,V1Py,V2Py,DVPy,
      & TXPy,VPy,ALAMPy,TRACEPy,UNIFPy, SUMAPy,IrradPy,SumVVPy,
      & MODELPy,ITYPEPy,IEMSCTPy,IMpy,
-     & ISEASNPy,MLpy,IRD1py, WMOLunits,
+     & ISEASNPy,MLpy,IRD1py, WMOLunits,IHAZEpy
      & ZMDLpy, Ppy, Tpy,WMOLpy,
      & H1Py,H2Py,ANGLEPy,RangePy)
 
 ! note MLpy is implicit, don't pass it in from Numpy
       Logical,Intent(in) :: Python
       Integer,Intent(in) :: nwl,MODELPy,ITYPEPy,IEMSCTPy,IMpy
-      Integer,Intent(in) :: ISEASNpy,MLpy,IRD1py, WMOLunits
+      Integer,Intent(in) :: ISEASNpy,MLpy,IRD1py, WMOLunits,IHAZEpy
       real,intent(in) :: ZMDLpy(mlpy),Ppy(mlpy),Tpy(mlpy),WMOLpy(12)
       Real, Intent(in)  :: V1Py,V2Py,DVPy,H1Py,H2Py,ANGLEPy,RangePy
       Real, Intent(Out) :: TXPy(nwl,63), VPy(nwl), ALAMPy(nwl),
@@ -1044,7 +1044,7 @@ C
       If (Python) Then
       !FIXME make it read input parameter
         ISEASN=ISEASNPy
-        IHAZE=0;IVULCN=0; ICSTL=0; ICLD=0; IVSA=0; VIS=0.;
+        IHAZE=IHAZEPy;IVULCN=0; ICSTL=0; ICLD=0; IVSA=0; VIS=0.;
         WSS=0.; WHH=0.; RAINRT=0.; GNDALT=0.
       Else
        READ(IRD,1200)IHAZE,ISEASN,IVULCN,ICSTL,ICLD,
