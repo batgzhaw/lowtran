@@ -1980,7 +1980,7 @@ C
          ! if python it was set from main common.
 12      if (.not.python) JUNIT(KM) = JOU(JCHAR(KM))
 
-
+       IF (.not.python) THEN
       IF(IRD0 .EQ. 0) THEN
           JUNIT(1) = M1
           JUNIT(2) = M1
@@ -2027,6 +2027,7 @@ C
      X    JUNIT(13)= 6
           IF((MDEF .GT.0).AND.(JCHAR(14).EQ.BL))
      X    JUNIT(14)= 6
+      ENDIF
       ENDIF
       IF(ICONV .EQ. 1) THEN
            CALL CHECK(P(K),JUNIT(1),1)
