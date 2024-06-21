@@ -951,7 +951,7 @@ C     Python we pass data out as variable in RAM.
           OPEN(IPR,FILE=nulunix,STATUS='OLD',ERR=666)
           GOTO 667
 C         if using Windows w/o Cygwin -- NUL or NUL: gives SIGSEGV on Windows 10
-666       OPEN(IPR,STATUS='SCRATCH')
+666       OPEN(IPR,STATUS='replace')
 C     Don't open IPU or IPR1 in this case, they all talk to the same
 C     /dev/null
 667   EndIf
@@ -3696,7 +3696,7 @@ C
       ENDIF
       DO 12 KM = 1,15
 !TODO this needs to be directly set if using Python
-12    JUNIT(KM) = JOU(JCHAR(KM))
+12    if (.not.python) JUNIT(KM) = JOU(JCHAR(KM))
       IF(M1 .NE. 0) JUNIT(1) = M1
       IF(M1 .NE. 0) JUNIT(2) = M1
       CALL CHECK(P(K),JUNIT(1),1)
