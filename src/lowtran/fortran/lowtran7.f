@@ -3565,8 +3565,9 @@ C
       IF(KN.LE.9)AHAZE  =AHVSA(KN)
       END Subroutine VSANSM
 
-      SUBROUTINE RDNSM(Python)
+      SUBROUTINE RDNSM(Python, ZMDLPy)
       Logical, Intent(in) :: Python
+      Real, Intent(in) :: ZMDLPy(40)
 C
 C     THIS SUBROUTINE READS MODEL 7 DATA WHEN ISVA EQ 1
 C
@@ -3654,7 +3655,7 @@ C      THEREFORE, WHEN  'JCHAR(K) = 1-5', JCHAR(K) WILL BE RESET TO 6
 C
 C
       if(Python) then
-        print*,'WARNING: this case untested in RNDSM'
+        ZMDL(K) = ZMDLPy(K)
       else
         READ(IRD,80)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
      X (JCHAR(KM),KM=1,15)
