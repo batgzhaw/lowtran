@@ -1132,6 +1132,7 @@ C*****CARD 2C  USER SUPPLIED ATMOSPHERIC PROFILE
                 ! for common blocks instead of reading in AERNSM
                 do ipy2 = 1,ml
                     ZM(ipy2) = ZMDLPy(ipy2) ! ZM = ZMDL
+                    ZMDL(ipy2) = ZMDL(ipy2)
                     P(ipy2)    = Ppy(ipy2)
                     T(ipy2)    = Tpy(ipy2)
                 enddo
