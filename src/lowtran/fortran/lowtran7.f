@@ -880,7 +880,7 @@ C       HERZBERG CONTINUUM (41322-36000 CM-1).
 C
 C***********************************************************************
       COMMON RELHUM(34),HSTOR(34),ICH(4),VH(17),TX(63),W(63)
-      COMMON             WPATH(68, 63),TBBY(68)
+      COMMON             WPATH(68, 63),TBBY(68), ,ZMDL(34)
       COMMON ABSC(5,47),EXTC(5,47),ASYM(5,47),VX2(47),AWCCON(5)
       COMMON /IFIL/ IRD,IPR,IPU,NPR,IPR1
       COMMON /CARD1/ MODEL,ITYPE,IEMSCT,M1,M2,M3,IM,NOPRT,TBOUND,SALB
@@ -3987,7 +3987,7 @@ C     SUGESTED BY TONY WARRIC             MCDONNELL DUGLAS
 C     AND  MAJ ROBERT G. HUGES            AFWAL/WEA
 C***********************************************************************
       COMMON RELHUM(34),HSTOR(34),ICH(4),VH(17),TX(63),W(63)
-      COMMON             WPATH(68, 63),TBBY(68),ZMDL(34)
+      COMMON             WPATH(68, 63),TBBY(68)
       COMMON ABSC(5,47),EXTC(5,47),ASYM(5,47),VX2(47),AWCCON(5)
       COMMON /IFIL/IRD,IPR,IPU,NPR,IPR1
       COMMON /CARD1/ MODEL,ITYPE,IEMSCT,M1,M2,M3,IM,NOPRNT,TBOUND,SALB
