@@ -1916,6 +1916,10 @@ C
           WRITE(IPR,81)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
      X     (JCHAR(KM),KM=1,14)
 81         FORMAT ( F10.3,1P5E10.3,10X,15A1)
+      else
+            ZMDL(K) = ZMDLPy(K)
+            P(K) = Ppy(K)
+            T(K) = Tpy(K)
       ENDIF
       IF(IRD1 .EQ. 1) THEN
       If (.not.Python)     READ(IRD,83)(WMOL(KM),KM=4,12)
@@ -3649,11 +3653,6 @@ C      THEREFORE, WHEN  'JCHAR(K) = 1-5', JCHAR(K) WILL BE RESET TO 6
 C
 C
       if(Python) then
-
-        ZMDL(K) = ZMDLPy(K)
-        P(K)    = Ppy(K)
-        T(K)    = Tpy(K)
-
         print*,'WARNING: this case untested in RNDSM'
       else
         READ(IRD,80)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
