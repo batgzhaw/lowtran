@@ -3649,11 +3649,11 @@ C      THEREFORE, WHEN  'JCHAR(K) = 1-5', JCHAR(K) WILL BE RESET TO 6
 C
 C
       if(Python) then
-        do ipy2 = 1,ml
-            ZMDL(ipy2) = ZMDLPy(ipy2)
-            P(ipy2)    = Ppy(ipy2)
-            T(ipy2)    = Tpy(ipy2)
-        enddo
+
+        ZMDL(K) = ZMDLPy(K)
+        P(K)    = Ppy(K)
+        T(K)    = Tpy(K)
+
         print*,'WARNING: this case untested in RNDSM'
       else
         READ(IRD,80)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
