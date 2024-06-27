@@ -1044,7 +1044,7 @@ C
       If (Python) Then
       !FIXME make it read input parameter
         ISEASN=ISEASNPy
-        IHAZE=IHAZEPy;IVULCN=0; ICSTL=0; ICLD=0; IVSA=0; VIS=0.;
+        IHAZE=IHAZEPy;IVULCN=0; ICSTL=0; ICLD=0; IVSA=1; VIS=0.;
         WSS=0.; WHH=0.; RAINRT=0.; GNDALT=0.
       Else
        READ(IRD,1200)IHAZE,ISEASN,IVULCN,ICSTL,ICLD,
@@ -1662,7 +1662,7 @@ C@    RETURN
        SUBROUTINE AERNSM(JPRT,  GNDALT, Python,ZMDLPy)
       Logical,Intent(in) :: Python
       real, intent(in) :: gndalt
-      real, dimension(8), intent(in) :: ZMDLPy
+      real, intent(in) :: ZMDLPy(*)
       Integer, Intent(out) :: Jprt
 C**********************************************************************
 C     DEFINES ALTITUDE DEPENDENT VARIABLES Z,P,T,WH,WO AND HAZE
