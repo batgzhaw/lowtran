@@ -1909,7 +1909,7 @@ C
         !NOTE if Python, then we plug in these values into COMMON blocks in main subroutine.
         ! common block will give:
         ! ZMDL, P, T,
-      If (.not.Python) THEN  READ(IRD,80)ZMDL(K),P(K),T(K),
+      If (.not.Python)  READ(IRD,80)ZMDL(K),P(K),T(K),
      &     WMOL(1),WMOL(2),WMOL(3),
      X     (JCHAR(KM),KM=1,14)
 80         FORMAT ( F10.3,5E10.3,15A1)
@@ -1920,7 +1920,6 @@ C
             ZMDL(K) = ZMDLPy(K)
             P(K) = Ppy(K)
             T(K) = Tpy(K)
-            ENDIF
       ENDIF
       IF(IRD1 .EQ. 1) THEN
       If (.not.Python)     READ(IRD,83)(WMOL(KM),KM=4,12)
