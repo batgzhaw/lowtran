@@ -939,11 +939,17 @@ C     nulunix if on Unix/Linux, nuwin if on windows
       IPU = 17
       IPR1= 18
 
+      ATMOSPHERE = 19
+      EXTINCTION = 20
+
       If (.not.Python) Then
           OPEN(IRD,FILE='TAPE5',STATUS='OLD')
           OPEN(IPR,FILE=IPRfn,STATUS='OLD')
           OPEN(IPU,FILE=IPUfn,STATUS='OLD')
           OPEN(IPR1,FILE=IPR1fn,STATUS='OLD')
+          OPEN(ATMOSPHERE,FILE='ATMOSPHERE',STATUS='OLD')
+          OPEN(EXTINCTION,FILE='EXTINCTION',STATUS='OLD')
+
       Else
 C     dump all the huge verbose output text to NULL, since when using
 C     Python we pass data out as variable in RAM.
@@ -1016,7 +1022,7 @@ C@    WRITE(IPR,1010) HDATE,HTIME
         IMULT=0
         TBOUND=0; SALB=0; NOPRT=0
       Else
-        READ(IRD,1110)MODEL,ITYPE,IEMSCT,IMULT,M1,M2,M3,
+        READ(IRD,1111)MODEL,ITYPE,IEMSCT,IMULT,M1,M2,M3,
      &        M4,M5,M6,MDEF,IM,NOPRT,TBOUND,SALB
       EndIf
 
@@ -1047,7 +1053,7 @@ C
         IHAZE=0;IVULCN=0; ICSTL=0; ICLD=0; IVSA=0; VIS=0.;
         WSS=0.; WHH=0.; RAINRT=0.; GNDALT=0.
       Else
-       READ(IRD,1200)IHAZE,ISEASN,IVULCN,ICSTL,ICLD,
+       READ(IRD,1201)IHAZE,ISEASN,IVULCN,ICSTL,ICLD,
      & IVSA,VIS,WSS,WHH,RAINRT,GNDALT
       EndIf
 1200  FORMAT(6I5,5F10.3)
@@ -1092,7 +1098,7 @@ C
       ISEED=-99
       IF(ICLD .LT. 18) GO TO 230
 C*****CARD 2A CIRRUS CLOUDS
-      If (.not.Python) READ(IRD,1210)CTHIK,CALT,CEXT,ISEED
+      If (.not.Python) READ(IRD,1211)CTHIK,CALT,CEXT,ISEED
 1210  FORMAT(3F10.3,I10)
       WRITE(IPR,1211)CTHIK,CALT,CEXT,ISEED
 1211  FORMAT('0 CARD 2A *****',3F10.3,I10)
@@ -1103,7 +1109,7 @@ C*****CARD 2B VERTICAL STRUCTURE ALGORITHM
       ZINVSA=-99.
 C
       IF( IVSA. EQ. 0 ) GO TO 240
-      If (.not.Python) READ (IRD,1230) ZCVSA,ZTVSA,ZINVSA
+      If (.not.Python) READ (IRD,1231) ZCVSA,ZTVSA,ZINVSA
 1230  FORMAT(3F10.3)
       WRITE(IPR,1231)ZCVSA,ZTVSA,ZINVSA
 1231  FORMAT('0 CARD 2B *****',3F10.3)
@@ -1153,7 +1159,7 @@ C*****CARD 2C  USER SUPPLIED ATMOSPHERIC PROFILE
 
 
               else
-                READ (IRD,1250) ML,IRD1,IRD2,(HMODEL(I,7),I=1,5)
+                READ (IRD,1251) ML,IRD1,IRD2,(HMODEL(I,7),I=1,5)
               endif
 
 
@@ -1241,14 +1247,14 @@ C
       Endif
 
       IF(IEMSCT.EQ.3) GO TO 315
-      if (.not.Python)  READ(IRD,1312)H1,H2,ANGLE,RANGE,BETA,RO,LEN
+      if (.not.Python)  READ(IRD,1313)H1,H2,ANGLE,RANGE,BETA,RO,LEN
 1312  FORMAT(6F10.3,I5)
       WRITE(IPR,1313)H1,H2,ANGLE,RANGE,BETA,RO,LEN
 1313  FORMAT('0 CARD 3  *****',6F10.3,I5)
       GO TO 320
 C*****CARD 3 FOR DIRECTLY TRANSMITTED SOLAR RADIANCE (IEMSCT = 3)
   315 CONTINUE
-      If (.not.Python) READ(IRD,1316) H1,H2,ANGLE,IDAY,RO,ISOURC,ANGLEM
+      If (.not.Python) READ(IRD,1317) H1,H2,ANGLE,IDAY,RO,ISOURC,ANGLEM
  1316 FORMAT(3F10.3,I5,5X,F10.3,I5,F10.3)
       WRITE(IPR,1317) H1,H2,ANGLE,IDAY,RO,ISOURC,ANGLEM
  1317 FORMAT('0 CARD 3   *****',3F10.3,I5,5X,F10.3,I5,F10.3)
@@ -1281,7 +1287,7 @@ C
 C
 C*****CARD 3A1
 C
-      If (.not.Python) READ(IRD,1320) IPARM,IPH,IDAY,ISOURC
+      If (.not.Python) READ(IRD,1321) IPARM,IPH,IDAY,ISOURC
       if (Python) IPH=2 ! FIXME 2 is easiest case
 1320  FORMAT(4I5)
       WRITE(IPR,1321) IPARM,IPH,IDAY,ISOURC
@@ -1289,7 +1295,7 @@ C
 C
 C*****CARD 3A2
 C
-      If (.not.Python) READ(IRD,1322)PARM1,PARM2,PARM3,PARM4,TIME,PSIPO,
+      If (.not.Python) READ(IRD,1323)PARM1,PARM2,PARM3,PARM4,TIME,PSIPO,
      &  ANGLEM,G
 1322  FORMAT(8F10.3)
       WRITE(IPR,1323)PARM1,PARM2,PARM3,PARM4,TIME,PSIPO,ANGLEM,G
@@ -1305,14 +1311,14 @@ C*****CARD 3B1 USER DEFINED PHASE FUNCTION
 C
 C*****READ USER DEFINED PHASE FUNCTION
 C
-      If (.not.Python) READ(IRD,1326)NANGLS
+      If (.not.Python) READ(IRD,1327)NANGLS
 1326  FORMAT(I5)
       WRITE(IPR,1327)NANGLS
 1327  FORMAT(' CARD 3B1*****',I5)
 C
 C*****CARD 3B2
 C
-      If (.not.Python) READ(IRD,1328)(ANGF(I),F(1,I),F(2,I),F(3,I),
+      If (.not.Python) READ(IRD,1329)(ANGF(I),F(1,I),F(2,I),F(3,I),
      &                  F(4,I),I=1,NANGLS)
 1328  FORMAT(5E10.3)
       WRITE(IPR,1329)(ANGF(I),F(1,I),F(2,I),F(3,I),F(4,I),I=1,NANGLS)
@@ -1328,7 +1334,7 @@ C
       If (Python) then
           V1 = V1Py; V2 = V2Py; DV = DVPy
       Else
-         READ(IRD,1400)V1,V2,DV
+         READ(IRD,1401)V1,V2,DV
       EndIf
 1400  FORMAT(3F10.3)
       WRITE (IPR,1401) V1,V2,DV
@@ -1626,7 +1632,7 @@ C
 C
 C*****WRITE END OF FILE ON TAPE 7
 630   IF(IERROR .GT. 0) THEN
-      If (.not.Python)     READ(IRD,1600) IRPT
+      If (.not.Python)     READ(IRD,1630) IRPT
            WRITE(IPU,1600) IRPT
            WRITE(IPR1,1600)IRPT
       ENDIF
@@ -1908,7 +1914,7 @@ C
         !NOTE if Python, then we plug in these values into COMMON blocks in main subroutine.
         ! common block will give:
         ! ZMDL, P, T,
-      If (.not.Python)  READ(IRD,80)ZMDL(K),P(K),T(K),
+      If (.not.Python)  READ(ATMOSPHERE,80)ZMDL(K),P(K),T(K),
      &     WMOL(1),WMOL(2),WMOL(3),
      X     (JCHAR(KM),KM=1,14)
 80         FORMAT ( F10.3,5E10.3,15A1)
@@ -1917,7 +1923,7 @@ C
 81         FORMAT ( F10.3,1P5E10.3,10X,15A1)
       ENDIF
       IF(IRD1 .EQ. 1) THEN
-      If (.not.Python)     READ(IRD,83)(WMOL(KM),KM=4,12)
+      If (.not.Python)     READ(ATMOSPHERE,83)(WMOL(KM),KM=4,12)
 83         FORMAT((8E10.3))
            WRITE(IPR,84)(WMOL(KM),KM=4,12)
 84         FORMAT((1P8E10.3))
@@ -1950,7 +1956,7 @@ C
 C     ICHR  CHANGE AERSOL PROFILE REGION FOR IHA1 = 7
 C
       IF(IRD2 .EQ. 1) THEN
-         If (.not.Python)  READ(IRD,82)    AHAZE,EQLWCZ,RRATZ,IHA1,
+         If (.not.Python)  READ(ATMOSPHERE,82)    AHAZE,EQLWCZ,RRATZ,IHA1,
      &                                   ICLD1,IVUL1,ISEA1, ICHR
            WRITE(IPR,82)    AHAZE,EQLWCZ,RRATZ,IHA1,ICLD1,IVUL1,ISEA1,
      X ICHR
@@ -2348,7 +2354,7 @@ C
       COMMON /CARD2D/ IREG(4),ALTB(4),IREGC(4)
       DIMENSION TITLE(18),VX(47)
 C
-      READ (IRD,1200) (IREG(IK),IK=1,4)
+      READ (EXTINCTION,1200) (IREG(IK),IK=1,4)
 1200  FORMAT(4I5)
       WRITE(IPR,1210) (IREG(IK),IK=1,4)
 1210  FORMAT('0 CARD 2D *****',4I5)
@@ -2356,14 +2362,14 @@ C
       DO 1300 IHC = 1,4
 C
       IF(IREG(IHC) .EQ. 0) GO TO 1300
-      If (.not.Python) READ(IRD,1220) AWCCON(IHC),TITLE
+      If (.not.Python) READ(EXTINCTION,1220) AWCCON(IHC),TITLE
 1220  FORMAT(E10.3,18A4)
       WRITE(IPR,1230) AWCCON(IHC),TITLE
 1230  FORMAT('0 CARD 2D1 **** EQUIVALENT WATER = ',1PE10.3,18A4)
       WRITE(IPR,1250)
 1250  FORMAT('0 CARD 2D2 ****')
 C
-      If (.not.Python)  READ(IRD,1260)(VX(I),EXTC(IHC,I),ABSC(IHC,I),
+      If (.not.Python)  READ(EXTINCTION,1260)(VX(I),EXTC(IHC,I),ABSC(IHC,I),
      &  ASYM(IHC,I),I=1,47)
 1260  FORMAT(3(F6.2,2F7.5,F6.4))
       WRITE(IPR,1270)(VX(I),EXTC(IHC,I),ABSC(IHC,I),ASYM(IHC,I),I=1,47)
@@ -3650,7 +3656,7 @@ C
       if(Python) then
         print*,'WARNING: this case untested in RNDSM'
       else
-        READ(IRD,80)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
+        READ(ATMOSPHERE,80)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
      X (JCHAR(KM),KM=1,15)
       endif
 80    FORMAT ( F10.3,5E10.3,15A1)
@@ -3659,7 +3665,7 @@ C
 81    FORMAT ( F10.3,1P5E10.3,10X,15A1)
       IF(ZMDL(K) .LE. 2.0)JLOW = K
       IF(IRD1 .EQ. 1) THEN
-           READ(IRD,83)(WMOL(KM),KM=4,12)
+           READ(ATMOSPHERE,83)(WMOL(KM),KM=4,12)
 83         FORMAT(8E10.3)
            WRITE(IPR,84)(WMOL(KM),KM=4,12)
 84         FORMAT(1P8E10.3)
@@ -3690,7 +3696,7 @@ C        DEFAULT PROFILE ARE LOADED FROM IHA1,ICLD1,IVUL1
 C     ISEA1 = AERSOL SEASON CONTROL FOR ALTITUDE Z
 C
       IF(IRD2 .EQ. 1) THEN
-           READ(IRD,82)    AHAZE,EQLWCZ,RRATZ,IHA1,ICLD1,IVUL1,ISEA1
+           READ(ATMOSPHERE,82)    AHAZE,EQLWCZ,RRATZ,IHA1,ICLD1,IVUL1,ISEA1
            WRITE(IPR,82)    AHAZE,EQLWCZ,RRATZ,IHA1,ICLD1,IVUL1,ISEA1
 82         FORMAT(10X,3F10.3,4I5)
       ENDIF
