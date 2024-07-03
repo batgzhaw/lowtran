@@ -1917,8 +1917,10 @@ C
           WRITE(IPR,81)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
      X     (JCHAR(KM),KM=1,14)
 81         FORMAT ( F10.3,1P5E10.3,10X,15A1)
-            else
-                ZMDL(K) = ZM(K)
+      else
+            ZMDL(K) = ZMDLPy(K)
+            P(K) = Ppy(K)
+            T(K) = Tpy(K)
             ENDIF
       ENDIF
       IF(IRD1 .EQ. 1) THEN
