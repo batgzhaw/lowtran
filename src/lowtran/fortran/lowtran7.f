@@ -1,14 +1,14 @@
       SUBROUTINE LWTRN7(Python,nwl,V1Py,V2Py,DVPy,
      & TXPy,VPy,ALAMPy,TRACEPy,UNIFPy, SUMAPy,IrradPy,SumVVPy,
      & MODELPy,ITYPEPy,IEMSCTPy,IMpy,
-     & ISEASNPy,MLpy,IRD1py, WMOLunits,
+     & ISEASNPy,MLpy,IRD1py,
      & ZMDLpy, Ppy, Tpy,WMOLpy,
      & H1Py,H2Py,ANGLEPy,RangePy)
 
 ! note MLpy is implicit, don't pass it in from Numpy
       Logical,Intent(in) :: Python
       Integer,Intent(in) :: nwl,MODELPy,ITYPEPy,IEMSCTPy,IMpy
-      Integer,Intent(in) :: ISEASNpy,MLpy,IRD1py, WMOLunits
+      Integer,Intent(in) :: ISEASNpy,MLpy,IRD1py
       real,intent(in) :: ZMDLpy(mlpy),Ppy(mlpy),Tpy(mlpy),WMOLpy(12)
       Real, Intent(in)  :: V1Py,V2Py,DVPy,H1Py,H2Py,ANGLEPy,RangePy
       Real, Intent(Out) :: TXPy(nwl,63), VPy(nwl), ALAMPy(nwl),
@@ -1142,7 +1142,7 @@ C*****CARD 2C  USER SUPPLIED ATMOSPHERIC PROFILE
 
                 ! now set WMOL units
                 do ipy2 = 4,15
-                   junit(ipy2) = WMOLunits   !FIXME hard set to PARTIAL PRESSURE for Local Meterological experiments. Can be upgraded.
+                   junit(ipy2) = 14   !FIXME hard set to PARTIAL PRESSURE for Local Meterological experiments. Can be upgraded.
                 enddo
 
                 do ipy2 = 1,12
