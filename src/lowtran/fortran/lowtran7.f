@@ -1683,8 +1683,6 @@ C**********************************************************************
       COMMON /CARD2D/ IREG(4),ALTB(4),IREGC(4)
       COMMON /CARD3/ H1,H2,ANGLE,RANGE,BETA,RE,LEN
       COMMON /CARD4/ V1,V2,DV
-      COMMON /MODEL/ ZM(34),PM(34),TM(34),RFNDX(34),DENSTY(63,34),
-     1 CLDAMT(34),RRAMT(34),EQLWC(34),HAZEC(34)
       COMMON /CNTRL/ KMAX,M,IKMAX,NL,ML,IKLO,ISSGEO,IMULT
       COMMON /MART/ RHH
       COMMON /MDATA/  Z(50),P(50),T(50),WH(50),WCO2(50),WO(50),
@@ -1919,8 +1917,7 @@ C
           WRITE(IPR,81)ZMDL(K),P(K),T(K),WMOL(1),WMOL(2),WMOL(3),
      X     (JCHAR(KM),KM=1,14)
 81         FORMAT ( F10.3,1P5E10.3,10X,15A1)
-            else
-                ZMDL(K) = ZM(K)
+
             ENDIF
       ENDIF
       IF(IRD1 .EQ. 1) THEN
