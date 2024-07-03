@@ -1167,7 +1167,7 @@ C*****CARD 2C  USER SUPPLIED ATMOSPHERIC PROFILE
       M=7
 
 !NOTE if python, we plug in 2C1 values just above into the COMMON blocks
-      CALL AERNSM(JPRT,  GNDALT, Python, ZMDLPy)
+      CALL AERNSM(JPRT,  GNDALT, Python)
       IF(ICLD .LT. 20) GO TO 260
 C
 C     SET UP CIRRUS MODEL
@@ -1659,10 +1659,9 @@ C@    HTIME=SHIFT(GTIME,6)
 C@    RETURN
       END Subroutine LWTRN7
 
-       SUBROUTINE AERNSM(JPRT,  GNDALT, Python,ZMDLPy)
+       SUBROUTINE AERNSM(JPRT,  GNDALT, Python)
       Logical,Intent(in) :: Python
       real, intent(in) :: gndalt
-      real, dimension(8), intent(in) :: ZMDLPy
       Integer, Intent(out) :: Jprt
 C**********************************************************************
 C     DEFINES ALTITUDE DEPENDENT VARIABLES Z,P,T,WH,WO AND HAZE
@@ -1684,6 +1683,8 @@ C**********************************************************************
       COMMON /CARD2D/ IREG(4),ALTB(4),IREGC(4)
       COMMON /CARD3/ H1,H2,ANGLE,RANGE,BETA,RE,LEN
       COMMON /CARD4/ V1,V2,DV
+      COMMON /MODEL/ ZM(34),PM(34),TM(34),RFNDX(34),DENSTY(63,34),
+     1 CLDAMT(34),RRAMT(34),EQLWC(34),HAZEC(34)
       COMMON /CNTRL/ KMAX,M,IKMAX,NL,ML,IKLO,ISSGEO,IMULT
       COMMON /MART/ RHH
       COMMON /MDATA/  Z(50),P(50),T(50),WH(50),WCO2(50),WO(50),
@@ -1919,7 +1920,7 @@ C
      X     (JCHAR(KM),KM=1,14)
 81         FORMAT ( F10.3,1P5E10.3,10X,15A1)
             else
-                ZMDL(K) = ZMDLPy(K)
+                ZMDL(K) = ZM(K)
             ENDIF
       ENDIF
       IF(IRD1 .EQ. 1) THEN
