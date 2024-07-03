@@ -1160,7 +1160,7 @@ C*****CARD 2C  USER SUPPLIED ATMOSPHERIC PROFILE
 
 1250          FORMAT(3I5,18A4)
               WRITE(IPR,1251)ML,IRD1,IRD2,(HMODEL(I,7),I=1,5)
-              IF(IVSA.EQ.1) CALL RDNSM(Python, ZMDLPy)
+              IF(IVSA.EQ.1) CALL RDNSM(Python)
 1251          FORMAT('0 CARD 2C *****',3I5,18A4)
            ENDIF
       ENDIF
