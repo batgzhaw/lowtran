@@ -951,7 +951,7 @@ C     Python we pass data out as variable in RAM.
           OPEN(IPR,FILE=nulunix,STATUS='OLD',ERR=666)
           GOTO 667
 C         if using Windows w/o Cygwin -- NUL or NUL: gives SIGSEGV on Windows 10
-666       OPEN(IPR,FILE='log.txt',STATUS='replace')
+666       OPEN(IPR,STATUS='replace')
 C     Don't open IPU or IPR1 in this case, they all talk to the same
 C     /dev/null
 667   EndIf
